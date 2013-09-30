@@ -2,9 +2,9 @@
 
 #include <cstdio>
 
-#define DEBUG
+//#define DEBUG
 
-#define ALLOWED_DIFF_BY_STEP 0.05
+#define ALLOWED_DIFF_BY_STEP 0.02
 #define STEP_DURATION 20  // [ms]
 
 using namespace std;

@@ -11,7 +11,7 @@
 /* The part of the image corresponding to a color needed to say that an object
  * of this color has been seen.
  */
-#define DETECTION_PART_THRESHOLD 0.004
+#define DETECTION_PART_THRESHOLD 0.04
 
 /* Threshold for stopping when green is locked */
 #define TOO_CLOSE_THRESHOLD 0.5
@@ -19,6 +19,9 @@
 /* The maximal dist to center for an object to be considered as locked
  */
 #define ANGLE_THRESHOLD 0.2
+
+#define BACKWARD_SPEED -0.5
+#define FORWARD_SPEED   0.5
 
 //#define HIGH_QUALITY
 
