@@ -10,6 +10,6 @@ Order Driver::getOrder(){
   if (analyzer.redObjectSeen()){
     double directionError = analyzer.getRedAzimut();
     // First test version, with only proportional reaction
-    Order o(directionError, -directionError);
+    return Order(-directionError, directionError);
   }
 }
