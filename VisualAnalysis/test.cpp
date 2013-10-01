@@ -2,7 +2,6 @@
 
 #include "VideoAnalyzer.hpp"
 
-using namespace cv;
 using namespace std;
 
 int main(int argc, char ** argv){
@@ -11,6 +10,5 @@ int main(int argc, char ** argv){
   myAnalyzer.launch();
   while(true){
     myAnalyzer.step();
-    waitKey(30);
   }
 }

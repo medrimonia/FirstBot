@@ -58,11 +58,11 @@ void ImageAnalyzer::tag(Mat frame, Scalar tagColor) const{
 }
 
 double ImageAnalyzer::getAzimut() const{
-  return (center.x - imageWidth / 2) / (imageWidth / 2);
+  return (center.x - imageWidth / 2) / (imageWidth / 2.0);
 }
 
 double ImageAnalyzer::getElevation() const{
-  return (center.y - imageHeight / 2) / (imageHeight / 2);
+  return (center.y - imageHeight / 2) / (imageHeight / 2.0);
 }
 
 double ImageAnalyzer::partColored() const{

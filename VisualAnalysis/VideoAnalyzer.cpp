@@ -29,19 +29,26 @@ void VideoAnalyzer::step(){
   cv::Mat frame, frameHSV;
   timeval stepStart, stepEnd, elapsedTime;
   gettimeofday(&stepStart, NULL);
+  // Checking if it should wait:
+  timersub(&stepStart, &lastImageTime, &elapsedTime);
+  double timeToSleep = 1000.0 / MAX_FREQUENCY - MS_TIME(elapsedTime);
+  if (timeToSleep > 0){
+    waitKey(timeToSleep);
+  }
   bool captureSuccess = input.read(frame);
   
   if (!captureSuccess){
     cerr << "Failed to read a frame from the video input" << endl;
     exit(EXIT_FAILURE);
   }
+  gettimeofday(&lastImageTime, NULL);
   cvtColor(frame, frameHSV, CV_BGR2HSV);
 
   colorDetector.step(frameHSV);
 
 #if DETAIL_LEVEL >= 1
   // Tagging
-  if (colorDetector.partColored() > DETECTION_PART_THRESHOLD){
+  if (redObjectSeen()){
     colorDetector.tag(frame, Scalar(255, 0, 0));
   }
 
@@ -58,4 +65,13 @@ void VideoAnalyzer::launch(){
     step();
     waitKey(30);
   }
+}
+
+
+bool VideoAnalyzer::redObjectSeen(){
+  return (colorDetector.partColored() > DETECTION_PART_THRESHOLD);
+}
+
+double VideoAnalyzer::getRedAzimut(){
+  return colorDetector.getAzimut();
 }
