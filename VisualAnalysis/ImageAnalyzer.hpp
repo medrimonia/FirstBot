@@ -6,18 +6,24 @@
 
 class ImageAnalyzer{
 private:
-  cv::VideoCapture input;
-  cv::Mat lastFrame;
-  cv::Mat lastFrameHSV;
-
-  int nbPixelsColor1;
-  cv::Point color1Center;
+  int nbPixels;
+  int imageWidth, imageHeight;
+  cv::Point center;
+  cv::Scalar colorMin;
+  cv::Scalar colorMax;
+  std::string colorName;
 
 public:
   // Exit if fails to open the device
-  ImageAnalyzer(int cameraId);
+  ImageAnalyzer(cv::Scalar colorMin,
+                cv::Scalar colorMax,
+                std::string colorName);
 
-  void step();
+  /* Compute the analysis of the given hsv image */
+  void step(cv::Mat hsvImg);
+
+  /* Tag the barycenter on the given frame with the specified color */
+  void tag(cv::Mat frame, cv::Scalar tagColor) const;
 
   /* Return a value between -1 and 1 corresponding to the azimut detected
    * color barycenter.

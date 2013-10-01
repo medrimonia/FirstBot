@@ -1,14 +1,14 @@
-#include "opencv2/highgui/highgui.hpp"
 #include <iostream>
 
-#include "ImageAnalyzer.hpp"
+#include "VideoAnalyzer.hpp"
 
 using namespace cv;
 using namespace std;
 
 int main(int argc, char ** argv){
-  ImageAnalyzer myAnalyzer(1);
+  VideoAnalyzer myAnalyzer(1);
 
+  myAnalyzer.launch();
   while(true){
     myAnalyzer.step();
     waitKey(30);
