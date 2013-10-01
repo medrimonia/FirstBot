@@ -9,7 +9,8 @@
 class VideoAnalyzer{
 private:
   cv::VideoCapture input;
-  ImageAnalyzer colorDetector;
+  ImageAnalyzer redDetector;
+  ImageAnalyzer greenDetector;
   timeval lastImageTime;
 
 public:
@@ -22,5 +23,9 @@ public:
   bool redObjectSeen();
 
   double getRedAzimut();
+
+  bool greenObjectSeen();
+
+  double getGreenAzimut();
 };
 #endif//VIDEO_ANALYZER_HPP

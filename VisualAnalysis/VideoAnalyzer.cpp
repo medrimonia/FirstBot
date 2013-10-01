@@ -11,9 +11,12 @@ using namespace cv;
 using namespace std;
 
 VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
-                                              colorDetector(RED_MIN,
-                                                            RED_MAX,
-                                                            "Red"){
+                                              redDetector(RED_MIN,
+                                                          RED_MAX,
+                                                          "Red"),
+                                              greenDetector(GREEN_MIN,
+                                                            GREEN_MAX,
+                                                            "Green"){
   if (!input.isOpened()){
     cerr << "Cannot open the video file" << endl;
     exit(EXIT_FAILURE);
@@ -44,17 +47,22 @@ void VideoAnalyzer::step(){
   gettimeofday(&lastImageTime, NULL);
   cvtColor(frame, frameHSV, CV_BGR2HSV);
 
-  colorDetector.step(frameHSV);
+  redDetector.step(frameHSV);
+  greenDetector.step(frameHSV);
 
 #if DETAIL_LEVEL >= 1
-  // Tagging
+  // Tagging red with a green circle
   if (redObjectSeen()){
-    colorDetector.tag(frame, Scalar(255, 0, 0));
+    redDetector.tag(frame, Scalar(0, 255, 0));
+  }
+  // Tagging green with a red circle
+  if (greenObjectSeen()){
+    greenDetector.tag(frame, Scalar(0, 0, 255));
   }
 
   imshow("TaggedImage", frame);
 #endif
-
+  
   gettimeofday(&stepEnd, NULL);
   timersub(&stepEnd, &stepStart, &elapsedTime);
   printf("Step Time : %f ms\n", MS_TIME(elapsedTime));
@@ -69,9 +77,17 @@ void VideoAnalyzer::launch(){
 
 
 bool VideoAnalyzer::redObjectSeen(){
-  return (colorDetector.partColored() > DETECTION_PART_THRESHOLD);
+  return (redDetector.partColored() > DETECTION_PART_THRESHOLD);
 }
 
 double VideoAnalyzer::getRedAzimut(){
-  return colorDetector.getAzimut();
+  return redDetector.getAzimut();
+}
+
+bool VideoAnalyzer::greenObjectSeen(){
+  return (greenDetector.partColored() > DETECTION_PART_THRESHOLD);
+}
+
+double VideoAnalyzer::getGreenAzimut(){
+  return greenDetector.getAzimut();
 }
