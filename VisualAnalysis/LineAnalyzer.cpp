@@ -7,7 +7,7 @@
 #include "LineAnalyzer.hpp"
 
 #define LINE_COLOR_MIN cv::Scalar(0,80,80)
-#define LINE_COLOR_MAX cv::Scalar(20,255,255)
+#define LINE_COLOR_MAX cv::Scalar(10,255,255)
 
 using namespace cv;
 using namespace std;
@@ -29,7 +29,7 @@ void LineAnalyzer::step(){
     cerr << "Failed to read a frame from the video input" << endl;
     exit(EXIT_FAILURE);
   }
-  cvtColor(lastFrame, lastFrameHSV, CV_RGB2HSV);
+  cvtColor(lastFrame, lastFrameHSV, CV_BGR2HSV);
 
   cv::Mat lineColorImg;
 	cv::inRange(lastFrameHSV, LINE_COLOR_MIN, LINE_COLOR_MAX, lineColorImg);
