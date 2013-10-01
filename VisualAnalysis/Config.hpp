@@ -13,4 +13,7 @@
  */
 #define DETECTION_PART_THRESHOLD 0.02
 
+#define FRAME_WIDTH  160
+#define FRAME_HEIGHT 120
+
 #endif
