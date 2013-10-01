@@ -1,6 +1,11 @@
+#include <ctime>
+#include <sys/time.h>
+
 #include "VideoAnalyzer.hpp"
 #include "Colors.hpp"
 #include "Config.hpp"
+
+#define MS_TIME(tv)(tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0)
 
 using namespace cv;
 using namespace std;
@@ -22,6 +27,8 @@ VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
 
 void VideoAnalyzer::step(){
   cv::Mat frame, frameHSV;
+  timeval stepStart, stepEnd, elapsedTime;
+  gettimeofday(&stepStart, NULL);
   bool captureSuccess = input.read(frame);
   
   if (!captureSuccess){
@@ -40,6 +47,10 @@ void VideoAnalyzer::step(){
 
   imshow("TaggedImage", frame);
 #endif
+
+  gettimeofday(&stepEnd, NULL);
+  timersub(&stepEnd, &stepStart, &elapsedTime);
+  printf("Step Time : %f ms\n", MS_TIME(elapsedTime));
 }
 
 void VideoAnalyzer::launch(){
