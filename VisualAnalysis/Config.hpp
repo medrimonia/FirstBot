@@ -8,4 +8,9 @@
  */
 #define DETAIL_LEVEL 2
 
+/* The part of the image corresponding to a color needed to say that an object
+ * of this color has been seen.
+ */
+#define DETECTION_PART_THRESHOLD 0.02
+
 #endif

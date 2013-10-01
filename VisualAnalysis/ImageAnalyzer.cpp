@@ -66,5 +66,5 @@ double ImageAnalyzer::getElevation() const{
 }
 
 double ImageAnalyzer::partColored() const{
-  return nbPixels / (imageWidth * imageHeight);
+  return nbPixels / (double)(imageWidth * imageHeight);
 }

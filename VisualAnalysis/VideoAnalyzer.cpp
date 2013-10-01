@@ -32,7 +32,9 @@ void VideoAnalyzer::step(){
 
 #if DETAIL_LEVEL >= 1
   // Tagging
-  colorDetector.tag(frame, Scalar(255, 0, 0));
+  if (colorDetector.partColored() > DETECTION_PART_THRESHOLD){
+    colorDetector.tag(frame, Scalar(255, 0, 0));
+  }
 
   imshow("TaggedImage", frame);
 #endif
