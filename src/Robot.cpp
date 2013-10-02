@@ -5,7 +5,7 @@
 #define DEBUG
 
 #define ALLOWED_DIFF_BY_STEP 0.05
-#define STEP_DURATION 0.02
+#define STEP_DURATION 20  // [ms]
 
 using namespace std;
 
