@@ -35,7 +35,7 @@ Robot::Robot()
 #endif
 }
 
-void Robot::SendCommandMotor(float motL,float motR)
+void Robot::SendCommandMotor(double motL,double motR)
 {
   char leftPWM;
   char leftMode;
@@ -56,12 +56,12 @@ void Robot::SendCommandMotor(float motL,float motR)
 
   if(motR <0)
   {
-    rightPWM = (char)(-motL*255);
+    rightPWM = (char)(-motR*255);
     rightMode = 1; // Pour reculer
   }
   else
   {
-    rightPWM = (char)(motL*255);
+    rightPWM = (char)(motR*255);
     rightMode = 0; // Pour avancer
   }
   if (port.WriteChar('$') == -1){
@@ -93,12 +93,22 @@ void Robot::smoothTransition(const Order & src,
   else{
     highestDiff = abs(leftDiff);
   }
-  int nbSteps = highestDiff / ALLOWED_DIFF_BY_STEP;
-  double leftStep = leftDiff / (double)nbSteps;
-  double rightStep = rightDiff / (double)nbSteps;
+  int nbSteps = 1 + highestDiff / ALLOWED_DIFF_BY_STEP;
+  double leftStep  = (leftDiff  / (double)nbSteps);
+  double rightStep = (rightDiff / (double)nbSteps);
+#ifdef DEBUG
+  cout << "leftDiff : " << leftDiff << endl;
+  cout << "rightDiff : " << rightDiff << endl;
+  cout << "nbSteps  : " << nbSteps << endl;
+  cout << "leftStep : " << leftStep << endl;
+  cout << "rightStep : " << rightStep << endl;
+#endif
   for (int i = 0; i < nbSteps; i++){
-    SendCommandMotor(src.leftSpeed + leftStep * i,
-                     src.rightSpeed + rightStep * i);
+#ifdef DEBUG
+  cout << "rightMot :" << dst.rightSpeed - rightStep * i << endl;
+#endif
+    SendCommandMotor(dst.leftSpeed - leftStep * i,
+                     dst.rightSpeed - rightStep * i);
     usleep(1000 * STEP_DURATION);
   }
 }

@@ -67,6 +67,8 @@ int main(int argc, char ** argv)
     Order wishedOrder = d.getOrder();
     robot.smoothTransition(lastOrder, wishedOrder);
     lastOrder = wishedOrder;
+    cout << "Order : [" << wishedOrder.leftSpeed << ","
+         << wishedOrder.rightSpeed << "]" << endl;
   }
   return 0;
 }

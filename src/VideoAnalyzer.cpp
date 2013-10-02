@@ -66,6 +66,7 @@ void VideoAnalyzer::step(){
   gettimeofday(&stepEnd, NULL);
   timersub(&stepEnd, &stepStart, &elapsedTime);
   printf("Step Time : %f ms\n", MS_TIME(elapsedTime));
+  printf("Red part : %f\n", redDetector.partColored());
 }
 
 void VideoAnalyzer::launch(){

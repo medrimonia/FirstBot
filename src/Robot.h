@@ -14,7 +14,7 @@ class Robot
 
     Robot();
 
-    void SendCommandMotor(float,float);
+    void SendCommandMotor(double, double);
 
     void smoothTransition(const Order & src,
                           const Order & dst);
