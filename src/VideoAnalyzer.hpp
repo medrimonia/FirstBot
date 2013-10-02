@@ -20,11 +20,11 @@ public:
 
   void launch();
 
-  bool redObjectSeen();
+  double redStrength();
 
   double getRedAzimut();
 
-  bool greenObjectSeen();
+  double greenStrength();
 
   double getGreenAzimut();
 };

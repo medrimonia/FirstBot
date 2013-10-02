@@ -7,6 +7,11 @@
 class Driver{
 private:
   VideoAnalyzer analyzer;
+  // Accumulating error
+  double acc;
+  int state;
+
+  void updateState();
 
 public:
   Driver(int videoIndex);

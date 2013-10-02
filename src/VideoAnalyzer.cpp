@@ -52,11 +52,11 @@ void VideoAnalyzer::step(){
 
 #if DETAIL_LEVEL >= 1
   // Tagging red with a green circle
-  if (redObjectSeen()){
+  if (redStrength() > DETECTION_PART_THRESHOLD){
     redDetector.tag(frame, Scalar(0, 255, 0));
   }
   // Tagging green with a red circle
-  if (greenObjectSeen()){
+  if (greenStrength() > DETECTION_PART_THRESHOLD){
     greenDetector.tag(frame, Scalar(0, 0, 255));
   }
 
@@ -76,16 +76,16 @@ void VideoAnalyzer::launch(){
 }
 
 
-bool VideoAnalyzer::redObjectSeen(){
-  return (redDetector.partColored() > DETECTION_PART_THRESHOLD);
+double VideoAnalyzer::redStrength(){
+  return redDetector.partColored();
 }
 
 double VideoAnalyzer::getRedAzimut(){
   return redDetector.getAzimut();
 }
 
-bool VideoAnalyzer::greenObjectSeen(){
-  return (greenDetector.partColored() > DETECTION_PART_THRESHOLD);
+double VideoAnalyzer::greenStrength(){
+  return greenDetector.partColored();
 }
 
 double VideoAnalyzer::getGreenAzimut(){

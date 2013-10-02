@@ -13,6 +13,13 @@
  */
 #define DETECTION_PART_THRESHOLD 0.02
 
+/* Threshold for stopping when green is locked */
+#define TOO_CLOSE_THRESHOLD 0.5
+
+/* The maximal dist to center for an object to be considered as locked
+ */
+#define ANGLE_THRESHOLD 0.2
+
 //#define HIGH_QUALITY
 
 #ifdef HIGH_QUALITY
