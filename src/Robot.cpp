@@ -2,6 +2,9 @@
 
 #include <cstdio>
 
+#define DEBUG
+
+using namespace std;
 
 Robot::Robot()
 {
@@ -28,39 +31,48 @@ Robot::Robot()
 
 void Robot::SendCommandMotor(float motL,float motR)
 {
-  char LeftPWM;
-  char LeftMode;
-  char RightPWM;
-  char RightMode;
+  char leftPWM;
+  char leftMode;
+  char rightPWM;
+  char rightMode;
 
   char test;
   if(motL <0)
   {
-    LeftPWM = (char)(-motL*255);
-    LeftMode = 1; // Pour reculer
+    leftPWM = (char)(-motL*255);
+    leftMode = 1; // Pour reculer
   }
   else
   {
-    LeftPWM = (char)(motL*255);
-    LeftMode = 0; // Pour avancer
+    leftPWM = (char)(motL*255);
+    leftMode = 0; // Pour avancer
   }
 
   if(motR <0)
   {
-    RightPWM = (char)(-motL*255);
-    RightMode = 1; // Pour reculer
+    rightPWM = (char)(-motL*255);
+    rightMode = 1; // Pour reculer
   }
   else
   {
-    RightPWM = (char)(motL*255);
-    RightMode = 0; // Pour avancer
+    rightPWM = (char)(motL*255);
+    rightMode = 0; // Pour avancer
   }
-  if (port.WriteChar('$') == -1){ printf("Failed to send $\n");}
-else{printf("$ sent\n");}
+  if (port.WriteChar('$') == -1){
+    cerr << "Failed to send $" << endl;
+    exit(EXIT_FAILURE);
+  }
+#ifdef DEBUG
+  else{
+    cout << "$ sent" << endl;;
+    printf("Left Order  : [%d,%d]\n", leftMode , leftPWM);
+    printf("Right Order : [%d,%d]\n", rightMode, rightPWM);
+  }
+#endif
 
-  port.WriteChar(LeftMode);
-  port.WriteChar(LeftPWM);
-  port.WriteChar(RightMode);
-  port.WriteChar(RightPWM);
+  port.WriteChar(leftMode);
+  port.WriteChar(leftPWM);
+  port.WriteChar(rightMode);
+  port.WriteChar(rightPWM);
 }
 
