@@ -1,8 +1,8 @@
 
-int leftMode  = 1;
-int rightMode = 1;
-int leftPWM   = 0;
-int rightPWM  = 0;
+char leftMode  = 1;
+char rightMode = 1;
+char leftPWM   = 0;
+char rightPWM  = 0;
 
 // Initialization
 void setup()
@@ -41,7 +41,7 @@ void SCmode()
 {
   if(Serial.available() >= 5)
   {
-    int serialSecurity = Serial.read();
+    char serialSecurity = Serial.read();
     if(serialSecurity == '$')
     {
       leftMode  = Serial.read();
