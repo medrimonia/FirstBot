@@ -4,6 +4,9 @@
 
 #define DEBUG
 
+#define ALLOWED_DIFF_BY_STEP 0.05
+#define STEP_DURATION 0.02
+
 using namespace std;
 
 Robot::Robot()
@@ -14,10 +17,12 @@ Robot::Robot()
   {
     printf("%d\n",error);
   }
+#ifdef DEBUG
   else 
   {
     printf("Reussi\n");
   }
+#endif
 
   char c;
   while( port.Read(&c, 1) <= 0 )
@@ -25,8 +30,9 @@ Robot::Robot()
     printf("Attente d'une seconde\n");
     sleep(1);
   }
-
+#ifdef DEBUG
   printf("Construction terminée\n");
+#endif
 }
 
 void Robot::SendCommandMotor(float motL,float motR)
@@ -76,3 +82,23 @@ void Robot::SendCommandMotor(float motL,float motR)
   port.WriteChar(rightPWM);
 }
 
+void Robot::smoothTransition(const Order & src,
+                             const Order & dst){
+  double leftDiff = dst.leftSpeed - src.leftSpeed;
+  double rightDiff = dst.rightSpeed - src.rightSpeed;
+  double highestDiff;
+  if (abs(leftDiff) < abs(rightDiff)){
+    highestDiff = abs(rightDiff);
+  }
+  else{
+    highestDiff = abs(leftDiff);
+  }
+  int nbSteps = highestDiff / ALLOWED_DIFF_BY_STEP;
+  double leftStep = leftDiff / (double)nbSteps;
+  double rightStep = rightDiff / (double)nbSteps;
+  for (int i = 0; i < nbSteps; i++){
+    SendCommandMotor(src.leftSpeed + leftStep * i,
+                     src.rightSpeed + rightStep * i);
+    usleep(1000 * STEP_DURATION);
+  }
+}

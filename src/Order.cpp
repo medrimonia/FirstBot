@@ -1,5 +1,8 @@
 #include "Order.hpp"
 
+#define ALLOWED_DIFF_BY_STEP 0.05
+#define STEP_DURATION 0.02
+
 double boundValue(double val, double min, double max){
   if (val > max){
     return max;

@@ -1,5 +1,12 @@
-#include "Robot.h"
+#include <sstream>
 #include <cstdio>
+
+#include "Driver.hpp"
+#include "Robot.h"
+
+#define DEFAULT_VIDEO_INDEX 0
+
+using namespace std;
 
 /* Swaping smoothly order between -1.0 and 1.0. the period of the signal can
  * be controlled, the frequency of the modifications too.
@@ -38,9 +45,28 @@ void test()
   }
 }
 
-int main()
+int main(int argc, char ** argv)
 {
+/* TEST mode
   //test();
   progressiveTest();
+*/
+  int videoIndex = DEFAULT_VIDEO_INDEX;
+  if (argc > 1){
+    stringstream str(argv[1]);
+    str >> videoIndex;
+    if (!str){
+      cerr << "Invalid video index" << argv[1] << endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+  Driver d(videoIndex);
+  Robot robot;
+  Order lastOrder;
+  while(true){
+    Order wishedOrder = d.getOrder();
+    robot.smoothTransition(lastOrder, wishedOrder);
+    lastOrder = wishedOrder;
+  }
   return 0;
 }

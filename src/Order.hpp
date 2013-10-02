@@ -2,10 +2,10 @@
 #define ORDER_HPP
 
 class Order{
-private:
+public:
   double leftSpeed, rightSpeed;
 
-public:
+  Order(): leftSpeed(0.0), rightSpeed(0.0){};
   Order(double leftSpeed, double rightSpeed);
 
   /* A positive rotation means turning more left */
