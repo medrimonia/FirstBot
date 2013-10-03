@@ -6,7 +6,7 @@
 #include "Config.hpp"
 
 #define MOBILE_AVERAGE(newVal, oldVal) \
-  (newVal * (1 - DISCOUNT) + oldVal * DISCOUNT)
+  (newVal * (1 - config.getDiscount()) + oldVal * config.getDiscount())
 
 using namespace cv;
 using namespace std;

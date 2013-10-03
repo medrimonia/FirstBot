@@ -23,8 +23,8 @@ VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
     cerr << "Cannot open the video file" << endl;
     exit(EXIT_FAILURE);
   }
-  input.set(CV_CAP_PROP_FRAME_WIDTH, FRAME_WIDTH);
-  input.set(CV_CAP_PROP_FRAME_HEIGHT, FRAME_HEIGHT);
+  input.set(CV_CAP_PROP_FRAME_WIDTH, config.getFrameWidth());
+  input.set(CV_CAP_PROP_FRAME_HEIGHT, config.getFrameHeight());
 #if DETAIL_LEVEL >= 1
   namedWindow("TaggedImage", CV_WINDOW_AUTOSIZE);
 #endif

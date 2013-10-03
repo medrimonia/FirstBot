@@ -4,6 +4,7 @@ project (Robot)
 find_package (OpenCV REQUIRED)
 
 set (SOURCES
+    Config.cpp
     Driver.cpp
     Order.cpp
     ImageAnalyzer.cpp

@@ -1,38 +1,63 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
 
-/* 0 -> No print
- * 1 -> Print tagged image
- * 2 -> Print main analysis
- * 3 -> Print all
- */
-#define DETAIL_LEVEL 2 
+#include <string>
 
-/* The part of the image corresponding to a color needed to say that an object
- * of this color has been seen.
- */
-#define DETECTION_PART_THRESHOLD 0.04
+class Config;
 
-/* Threshold for stopping when green is locked */
-#define TOO_CLOSE_THRESHOLD 0.5
+extern Config config;
 
-/* The maximal dist to center for an object to be considered as locked
- */
-#define ANGLE_THRESHOLD 0.2
+class Config {
+  private:
+    static int videoIndex;
+    /* 0 -> No print
+     * 1 -> Print tagged image
+     * 2 -> Print main analysis
+     * 3 -> Print all
+     */
+    static int detailLevel;
+    /* The part of the image corresponding to a color needed to say that an object
+     * of this color has been seen.
+     */
+    static double detectionPartThreshold;
 
-#define BACKWARD_SPEED -0.5
-#define FORWARD_SPEED   0.5
+    /* Threshold for stopping when green is locked */
+    static double tooCloseThreshold;
 
-#define DISCOUNT 0.5
+    /* The maximal dist to center for an object to be considered as locked
+     */
+    static double angleThreshold;
 
-//#define HIGH_QUALITY
+    static double backwardSpeed;
+    static double forwardSpeed;
 
-#ifdef HIGH_QUALITY
-  #define FRAME_WIDTH  640
-  #define FRAME_HEIGHT 480
-#else
-  #define FRAME_WIDTH  160
-  #define FRAME_HEIGHT 120
-#endif
+    static double discount;
 
-#endif
+    static int frameWidth; 
+    static int frameHeight;
+
+  public:
+    Config(){}
+
+    static void parseFile(std::string filename);
+
+    static int getVideoIndex();
+
+    static int getDetailLevel();
+
+    static double getDetectionPartThreshold();
+
+    static double getTooCloseThreshold();
+
+    static double getAngleThreshold();
+
+    static double getBackwardSpeed();
+    static double getForwardSpeed();
+
+    static double getDiscount();
+
+    static int getFrameWidth(); 
+    static int getFrameHeight();
+};
+
+#endif // CONFIG_HPP

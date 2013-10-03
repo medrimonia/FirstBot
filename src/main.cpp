@@ -3,10 +3,10 @@
 
 #include "Driver.hpp"
 #include "Robot.h"
-
-#define DEFAULT_VIDEO_INDEX 0
+#include "Config.hpp"
 
 using namespace std;
+
 
 /* Swaping smoothly order between -1.0 and 1.0. the period of the signal can
  * be controlled, the frequency of the modifications too.
@@ -51,16 +51,8 @@ int main(int argc, char ** argv)
   //test();
   progressiveTest();
 */
-  int videoIndex = DEFAULT_VIDEO_INDEX;
-  if (argc > 1){
-    stringstream str(argv[1]);
-    str >> videoIndex;
-    if (!str){
-      cerr << "Invalid video index" << argv[1] << endl;
-      exit(EXIT_FAILURE);
-    }
-  }
-  Driver d(videoIndex);
+  config.parseFile("Config.cfg");
+  Driver d(config.getVideoIndex());
   Robot robot;
   Order lastOrder;
   while(true){

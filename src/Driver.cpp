@@ -26,12 +26,12 @@ void Driver::updateState(){
   cout << "Red Strength   : " << redStrength   << endl;
   cout << "Green Strength : " << greenStrength << endl;
 #endif
-  if (redStrength < DETECTION_PART_THRESHOLD &&
-      greenStrength < DETECTION_PART_THRESHOLD){
+  if (redStrength < config.getDetectionPartThreshold() &&
+      greenStrength < config.getDetectionPartThreshold()){
     newState = UNKNOWN_STATE;
   }
   if(redStrength > greenStrength){
-    if (abs(analyzer.getRedAzimut()) < ANGLE_THRESHOLD){
+    if (abs(analyzer.getRedAzimut()) < config.getAngleThreshold()){
       newState = RED_LOCKED;
     }
     else{
@@ -39,7 +39,7 @@ void Driver::updateState(){
     }
   }
   else{
-    if (abs(analyzer.getGreenAzimut()) < ANGLE_THRESHOLD){
+    if (abs(analyzer.getGreenAzimut()) < config.getAngleThreshold()){
       newState = GREEN_LOCKED;
     }
     else{
@@ -72,12 +72,14 @@ Order Driver::getOrder(){
 
   switch(state){
   case UNKNOWN_STATE: return Order(0,0);//TODO searching
-  case RED_LOCKED: return Order(BACKWARD_SPEED, BACKWARD_SPEED);
+  case RED_LOCKED: return Order(config.getBackwardSpeed(),
+                                config.getBackwardSpeed());
   case GREEN_LOCKED:
-    if (analyzer.greenStrength() > TOO_CLOSE_THRESHOLD){
+    if (analyzer.greenStrength() > config.getTooCloseThreshold()){
       return Order(0,0);
     }
-    return Order(FORWARD_SPEED,FORWARD_SPEED);
+    return Order(config.getForwardSpeed(),
+                 config.getForwardSpeed());
   default:
     if (error * acc < 0){//Opposite sign for acc and error
       acc = 0;
