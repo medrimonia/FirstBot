@@ -5,6 +5,9 @@
 #include "ImageAnalyzer.hpp"
 #include "Config.hpp"
 
+#define MOBILE_AVERAGE(newVal, oldVal) \
+  (newVal * (1 - DISCOUNT) + oldVal * DISCOUNT)
+
 using namespace cv;
 using namespace std;
 
@@ -41,12 +44,14 @@ void ImageAnalyzer::step(Mat hsvImg){
   double avgX = totalX / nbPixels;
   double avgY = totalY / nbPixels;
 
-  center.x = avgX;
-  center.y = avgY;
-
 #if DETAIL_LEVEL >= 2
   imshow(colorName  , colorImg);
 #endif
+  double newStrength = nbPixels / (double)(imageWidth * imageHeight);
+  // Using a mobile average
+  center.x = MOBILE_AVERAGE(avgX, center.x);
+  center.y = MOBILE_AVERAGE(avgY, center.y);
+  strength = MOBILE_AVERAGE(newStrength, strength);
 }
 
 void ImageAnalyzer::tag(Mat frame, Scalar tagColor) const{
@@ -66,5 +71,5 @@ double ImageAnalyzer::getElevation() const{
 }
 
 double ImageAnalyzer::partColored() const{
-  return nbPixels / (double)(imageWidth * imageHeight);
+  return strength;
 }

@@ -23,6 +23,8 @@
 #define BACKWARD_SPEED -0.5
 #define FORWARD_SPEED   0.5
 
+#define DISCOUNT 0.5
+
 //#define HIGH_QUALITY
 
 #ifdef HIGH_QUALITY

@@ -30,7 +30,7 @@ VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
 #endif
 }
 
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 1
 
 void VideoAnalyzer::step(){
   cv::Mat frame, frameHSV;

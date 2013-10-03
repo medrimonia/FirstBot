@@ -8,6 +8,7 @@ class ImageAnalyzer{
 private:
   int nbPixels;
   int imageWidth, imageHeight;
+  double strength;
   cv::Point center;
   cv::Scalar colorMin;
   cv::Scalar colorMax;
