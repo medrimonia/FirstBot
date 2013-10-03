@@ -7,6 +7,8 @@
 
 #define MS_TIME(tv)(tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0)
 
+#define MAX_FREQUENCY 10
+
 using namespace cv;
 using namespace std;
 
@@ -28,6 +30,8 @@ VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
 #endif
 }
 
+#define BUFFER_SIZE 10
+
 void VideoAnalyzer::step(){
   cv::Mat frame, frameHSV;
   timeval stepStart, stepEnd, elapsedTime;
@@ -38,11 +42,13 @@ void VideoAnalyzer::step(){
   if (timeToSleep > 0){
     waitKey(timeToSleep);
   }
-  bool captureSuccess = input.read(frame);
-  
-  if (!captureSuccess){
-    cerr << "Failed to read a frame from the video input" << endl;
-    exit(EXIT_FAILURE);
+
+  for (int i = 0; i < BUFFER_SIZE; i++){
+    bool captureSuccess = input.read(frame);
+    if (!captureSuccess){
+      cerr << "Failed to read a frame from the video input" << endl;
+      exit(EXIT_FAILURE);
+    }
   }
   gettimeofday(&lastImageTime, NULL);
   cvtColor(frame, frameHSV, CV_BGR2HSV);
@@ -72,7 +78,6 @@ void VideoAnalyzer::step(){
 void VideoAnalyzer::launch(){
   while(true){
     step();
-    waitKey(30);
   }
 }
 

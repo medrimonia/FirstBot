@@ -6,12 +6,12 @@
  * 2 -> Print main analysis
  * 3 -> Print all
  */
-#define DETAIL_LEVEL 0 
+#define DETAIL_LEVEL 2 
 
 /* The part of the image corresponding to a color needed to say that an object
  * of this color has been seen.
  */
-#define DETECTION_PART_THRESHOLD 0.004
+#define DETECTION_PART_THRESHOLD 0.02
 
 /* Threshold for stopping when green is locked */
 #define TOO_CLOSE_THRESHOLD 0.5
@@ -20,7 +20,7 @@
  */
 #define ANGLE_THRESHOLD 0.2
 
-//#define HIGH_QUALITY
+#define HIGH_QUALITY
 
 #ifdef HIGH_QUALITY
   #define FRAME_WIDTH  640

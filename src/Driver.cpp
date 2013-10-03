@@ -4,6 +4,8 @@
 #include "Driver.hpp"
 #include "Config.hpp"
 
+#define DEBUG
+
 #define UNKNOWN_STATE         0
 #define SEARCHING_RED_STATE   1
 #define RED_LOCKED            2

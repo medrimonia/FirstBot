@@ -4,8 +4,6 @@
 #include <cv.h>
 #include "ImageAnalyzer.hpp"
 
-#define MAX_FREQUENCY 10
-
 class VideoAnalyzer{
 private:
   cv::VideoCapture input;
