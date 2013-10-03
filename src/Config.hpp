@@ -37,6 +37,8 @@ class Config {
 
     static int frameWidth; 
     static int frameHeight;
+    static double maxFrequency;
+    static int bufferSize;
 
     static cv::Scalar redMin;
     static cv::Scalar redMax;
@@ -65,6 +67,8 @@ class Config {
 
     static int getFrameWidth(); 
     static int getFrameHeight();
+    static double getMaxFrequency();
+    static int getBufferSize();
 
     static cv::Scalar getRedMin();
     static cv::Scalar getRedMax();

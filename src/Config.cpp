@@ -19,6 +19,8 @@ double Config::forwardSpeed;
 double Config::discount;
 int    Config::frameWidth; 
 int    Config::frameHeight;
+double Config::maxFrequency;
+int    Config::bufferSize;
 Scalar Config::redMin;
 Scalar Config::redMax;
 Scalar Config::greenMin;
@@ -83,6 +85,12 @@ void Config::parseFile(std::string filename) {
       else if (STR_EQ(varName, "FRAME_HEIGHT")) {
         sscanf(varVal, "%d", &frameHeight);
       }
+      else if (STR_EQ(varName, "MAX_FREQUENCY")) {
+        sscanf(varVal, "%lf", &maxFrequency);
+      }
+      else if (STR_EQ(varName, "BUFFER_SIZE")) {
+        sscanf(varVal, "%d", &bufferSize);
+      }
       else if (STR_EQ(varName, "RED_MIN")) {
         redMin = parseScalar(varVal);
       }
@@ -137,6 +145,14 @@ int Config::getFrameWidth() {
 
 int Config::getFrameHeight() {
   return frameHeight;
+}
+
+double Config::getMaxFrequency(){
+  return maxFrequency;
+}
+
+int Config::getBufferSize(){
+  return bufferSize;
 }
 
 Scalar Config::getRedMin(){

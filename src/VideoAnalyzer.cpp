@@ -6,8 +6,6 @@
 
 #define MS_TIME(tv)(tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0)
 
-#define MAX_FREQUENCY 10
-
 using namespace cv;
 using namespace std;
 
@@ -29,20 +27,19 @@ VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
   }
 }
 
-#define BUFFER_SIZE 1
-
 void VideoAnalyzer::step(){
   cv::Mat frame, frameHSV;
   timeval stepStart, stepEnd, elapsedTime;
   gettimeofday(&stepStart, NULL);
   // Checking if it should wait:
   timersub(&stepStart, &lastImageTime, &elapsedTime);
-  double timeToSleep = 1000.0 / MAX_FREQUENCY - MS_TIME(elapsedTime);
+  double timeToSleep = 1000.0 / config.getMaxFrequency()
+                       - MS_TIME(elapsedTime);
   if (timeToSleep > 0){
     waitKey(timeToSleep);
   }
 
-  for (int i = 0; i < BUFFER_SIZE; i++){
+  for (int i = 0; i < config.getBufferSize(); i++){
     bool captureSuccess = input.read(frame);
     if (!captureSuccess){
       cerr << "Failed to read a frame from the video input" << endl;
