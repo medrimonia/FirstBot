@@ -2,7 +2,6 @@
 #include <sys/time.h>
 
 #include "VideoAnalyzer.hpp"
-#include "Colors.hpp"
 #include "Config.hpp"
 
 #define MS_TIME(tv)(tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0)
@@ -13,11 +12,11 @@ using namespace cv;
 using namespace std;
 
 VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
-                                              redDetector(RED_MIN,
-                                                          RED_MAX,
+                                              redDetector(config.getRedMin(),
+                                                          config.getRedMax(),
                                                           "Red"),
-                                              greenDetector(GREEN_MIN,
-                                                            GREEN_MAX,
+                                              greenDetector(config.getGreenMin(),
+                                                            config.getGreenMax(),
                                                             "Green"){
   if (!input.isOpened()){
     cerr << "Cannot open the video file" << endl;
@@ -25,9 +24,9 @@ VideoAnalyzer::VideoAnalyzer(int videoIndex): input(videoIndex),
   }
   input.set(CV_CAP_PROP_FRAME_WIDTH, config.getFrameWidth());
   input.set(CV_CAP_PROP_FRAME_HEIGHT, config.getFrameHeight());
-#if DETAIL_LEVEL >= 1
-  namedWindow("TaggedImage", CV_WINDOW_AUTOSIZE);
-#endif
+  if (config.getDetailLevel() >= 1){
+    namedWindow("TaggedImage", CV_WINDOW_AUTOSIZE);
+  }
 }
 
 #define BUFFER_SIZE 1
@@ -56,18 +55,18 @@ void VideoAnalyzer::step(){
   redDetector.step(frameHSV);
   greenDetector.step(frameHSV);
 
-#if DETAIL_LEVEL >= 1
-  // Tagging red with a green circle
-  if (redStrength() > DETECTION_PART_THRESHOLD){
-    redDetector.tag(frame, Scalar(0, 255, 0));
-  }
-  // Tagging green with a red circle
-  if (greenStrength() > DETECTION_PART_THRESHOLD){
-    greenDetector.tag(frame, Scalar(0, 0, 255));
-  }
+  if (config.getDetailLevel() >= 1){
+    // Tagging red with a green circle
+    if (redStrength() > config.getDetectionPartThreshold()){
+      redDetector.tag(frame, Scalar(0, 255, 0));
+    }
+    // Tagging green with a red circle
+    if (greenStrength() > config.getDetectionPartThreshold()){
+      greenDetector.tag(frame, Scalar(0, 0, 255));
+    }
 
-  imshow("TaggedImage", frame);
-#endif
+    imshow("TaggedImage", frame);
+  }
   
   gettimeofday(&stepEnd, NULL);
   timersub(&stepEnd, &stepStart, &elapsedTime);

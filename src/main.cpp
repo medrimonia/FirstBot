@@ -51,7 +51,7 @@ int main(int argc, char ** argv)
   //test();
   progressiveTest();
 */
-  config.parseFile("Config.cfg");
+  config.parseFile("../Config.cfg");
   Driver d(config.getVideoIndex());
   Robot robot;
   Order lastOrder;

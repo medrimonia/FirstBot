@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(int argc, char ** argv){
-  config.parseFile("Config.cfg");
+  config.parseFile("../Config.cfg");
   VideoAnalyzer myAnalyzer(config.getVideoIndex());
 
   myAnalyzer.launch();

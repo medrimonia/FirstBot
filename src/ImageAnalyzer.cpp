@@ -16,9 +16,9 @@ ImageAnalyzer::ImageAnalyzer(Scalar colorMin,
                              string colorName): colorMin(colorMin),
                                                 colorMax(colorMax),
                                                 colorName(colorName){
-#if DETAIL_LEVEL >= 2
-  namedWindow(colorName, CV_WINDOW_AUTOSIZE);
-#endif
+  if (config.getDetailLevel() >= 2){
+    namedWindow(colorName, CV_WINDOW_AUTOSIZE);
+  }
 }
 
 void ImageAnalyzer::step(Mat hsvImg){
@@ -44,9 +44,10 @@ void ImageAnalyzer::step(Mat hsvImg){
   double avgX = totalX / nbPixels;
   double avgY = totalY / nbPixels;
 
-#if DETAIL_LEVEL >= 2
-  imshow(colorName  , colorImg);
-#endif
+  if (config.getDetailLevel() >= 2){
+    imshow(colorName  , colorImg);
+  }
+
   double newStrength = nbPixels / (double)(imageWidth * imageHeight);
   // Using a mobile average
   center.x = MOBILE_AVERAGE(avgX, center.x);

@@ -7,6 +7,8 @@ class Config;
 
 extern Config config;
 
+#include <cv.h>
+
 class Config {
   private:
     static int videoIndex;
@@ -36,6 +38,11 @@ class Config {
     static int frameWidth; 
     static int frameHeight;
 
+    static cv::Scalar redMin;
+    static cv::Scalar redMax;
+    static cv::Scalar greenMin;
+    static cv::Scalar greenMax;
+
   public:
     Config(){}
 
@@ -58,6 +65,11 @@ class Config {
 
     static int getFrameWidth(); 
     static int getFrameHeight();
+
+    static cv::Scalar getRedMin();
+    static cv::Scalar getRedMax();
+    static cv::Scalar getGreenMin();
+    static cv::Scalar getGreenMax();
 };
 
 #endif // CONFIG_HPP
