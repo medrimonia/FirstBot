@@ -13,8 +13,8 @@ double boundValue(double val, double min, double max){
   return val;
 }
 
-Order::Order(double lSpeed, double rSpeed): leftSpeed(leftSpeed),
-                                            rightSpeed(rightSpeed){
+Order::Order(double lSpeed, double rSpeed): leftSpeed(lSpeed),
+                                            rightSpeed(rSpeed){
   leftSpeed = boundValue(leftSpeed  , -1.0, 1.0);
   rightSpeed = boundValue(rightSpeed, -1.0, 1.0);
 }
