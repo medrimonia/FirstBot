@@ -39,6 +39,7 @@ void VideoAnalyzer::step(){
     waitKey(timeToSleep);
   }
 
+//TODO try grab to get the frame and consume the buffer
   for (int i = 0; i < config.getBufferSize(); i++){
     bool captureSuccess = input.read(frame);
     if (!captureSuccess){
